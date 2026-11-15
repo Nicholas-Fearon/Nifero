@@ -118,7 +118,7 @@ function Logo({ light = false }: { light?: boolean }) {
       aria-label="Nifero home"
       className={`font-display text-[32px] font-extrabold tracking-[-.095em] ${light ? "text-white" : "text-ink"}`}
     >
-      nifero<span className="text-[#83a93b]">.</span>
+      Nifero<span className="text-[#83a93b]">.</span>
     </a>
   );
 }
