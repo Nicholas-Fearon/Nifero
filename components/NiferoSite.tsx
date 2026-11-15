@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
-  Check,
-  Code2,
   Menu,
   X,
 } from "lucide-react";
+import { enquiryLimits, enquiryServices } from "@/lib/enquiry-fields";
 
 const services = [
   {
@@ -175,32 +175,48 @@ function Heading({
 }
 
 export default function NiferoSite() {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [filter, setFilter] = useState<"all" | "website" | "app">("all");
-  const [formStatus, setFormStatus] = useState("");
+  const [formError, setFormError] = useState("");
+  const [sending, setSending] = useState(false);
+  const submission = useRef<{ id: string; payload: string } | null>(null);
   const shown = concepts.filter(
     (c) => filter === "all" || c.category === filter,
   );
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (sending) return;
+
     const form = event.currentTarget;
-    if (!form.reportValidity()) return;
-    // Demo only. Replace with your real mailbox or a server-side form provider before publishing.
-    const recipient = "REPLACE_WITH_YOUR_EMAIL@example.com";
-    if (recipient.startsWith("REPLACE_")) {
-      setFormStatus(
-        "Demo form only: configure your business email or form endpoint before accepting enquiries.",
-      );
-      return;
+    const fields = Object.fromEntries(new FormData(form));
+    const payload = JSON.stringify(fields);
+    setSending(true);
+    setFormError("");
+
+    try {
+      if (submission.current?.payload !== payload) {
+        submission.current = { id: crypto.randomUUID(), payload };
+      }
+      const response = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...fields, id: submission.current.id }),
+      });
+      if (!response.ok) {
+        const result = await response.json();
+        setFormError(result.message);
+        return;
+      }
+      form.reset();
+      submission.current = null;
+      router.push("/thank-you");
+    } catch {
+      setFormError("We couldn’t send your enquiry. Please check your connection and try again.");
+    } finally {
+      setSending(false);
     }
-    const fields = new FormData(form);
-    const subject = `Nifero enquiry — ${fields.get("service")}`;
-    const body = `Name: ${fields.get("name")}\nEmail: ${fields.get("email")}\nService: ${fields.get("service")}\n\nProject details:\n${fields.get("message")}`;
-    window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setFormStatus(
-      "Your email application should open. Please send the prepared email to complete your enquiry.",
-    );
   }
 
   return (
@@ -590,9 +606,11 @@ export default function NiferoSite() {
             </div>
             <form
               onSubmit={handleSubmit}
+              method="post"
+              action="/api/enquiries"
               className="rounded-[23px] bg-white p-6 shadow-sm sm:p-9"
             >
-              <div className="grid gap-4">
+              <fieldset className="grid gap-4" disabled={sending}>
                 <label className="text-sm font-bold" htmlFor="name">
                   Your name
                 </label>
@@ -600,6 +618,7 @@ export default function NiferoSite() {
                   id="name"
                   name="name"
                   required
+                  maxLength={enquiryLimits.name}
                   autoComplete="name"
                   placeholder="Your name"
                   className="rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]"
@@ -612,6 +631,7 @@ export default function NiferoSite() {
                   name="email"
                   type="email"
                   required
+                  maxLength={enquiryLimits.email}
                   autoComplete="email"
                   placeholder="you@business.co.uk"
                   className="rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]"
@@ -622,13 +642,10 @@ export default function NiferoSite() {
                 <select
                   id="service"
                   name="service"
+                  required
                   className="rounded-xl border border-[#dce2d8] bg-white px-4 py-3 focus:outline-[#83a93b]"
                 >
-                  <option>New website or redesign</option>
-                  <option>Maintenance and support</option>
-                  <option>Website repair or improvement</option>
-                  <option>Custom web solution</option>
-                  <option>Something else</option>
+                  {enquiryServices.map((service) => <option key={service}>{service}</option>)}
                 </select>
                 <label className="text-sm font-bold" htmlFor="message">
                   Tell me about your project
@@ -637,28 +654,26 @@ export default function NiferoSite() {
                   id="message"
                   name="message"
                   required
+                  maxLength={enquiryLimits.message}
                   rows={4}
                   placeholder="A little about what you need..."
                   className="rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]"
                 />
+                <div hidden>
+                  <label htmlFor="website">Leave this field empty</label>
+                  <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+                </div>
                 <button
                   type="submit"
-                  className="mt-2 flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-bold text-white"
+                  className="mt-2 flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-bold text-white disabled:opacity-60"
                 >
-                  Prepare enquiry <ArrowRight size={16} />
+                  {sending ? "Sending enquiry…" : "Send enquiry"} <ArrowRight size={16} />
                 </button>
-                <p className="text-xs leading-5 text-muted">
-                  Prototype contact form. Connect your real business inbox or
-                  form service before publishing. This demo does not transmit or
-                  store entries.
-                </p>
-                <p
-                  role="status"
-                  aria-live="polite"
-                  className="text-sm font-semibold text-[#496432]"
-                >
-                  {formStatus}
-                </p>
+              </fieldset>
+              <div role="status" aria-live="polite">
+                {formError && (
+                  <p className="mt-4 text-sm font-semibold text-red-800">{formError}</p>
+                )}
               </div>
             </form>
           </div>
@@ -678,8 +693,7 @@ export default function NiferoSite() {
             </div>
           </div>
           <div className="mt-10 border-t border-[#34483b] pt-6 text-xs text-[#9cb09f]">
-            © {new Date().getFullYear()} Nifero. Website concept for review. Add
-            business and legal details before publishing.
+            © {new Date().getFullYear()} Nifero.
           </div>
         </div>
       </footer>

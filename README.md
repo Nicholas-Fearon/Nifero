@@ -2,11 +2,11 @@
 
 Responsive portfolio and services website for Nifero, built with Next.js App Router, React, TypeScript, Tailwind CSS v4 and Lucide icons.
 
-## Open in Visual Studio Code
+## Run locally
 
-1. Unzip the project and open the `nifero-nextjs` folder in VS Code.
-2. Make sure Node.js 20.9+ is installed (`node -v`). Node.js 22 LTS is a good choice.
-3. Open VS Code Terminal and run:
+1. Use Node.js 22 or newer.
+2. Copy `.env.example` to `.env.local` and follow the enquiry setup below.
+3. Run:
 
 ```bash
 npm install
@@ -21,22 +21,30 @@ npm run dev
 - `app/page.tsx` — home route
 - `app/layout.tsx` — metadata, global fonts and layout
 - `app/globals.css` — Tailwind v4 and theme tokens
-- `components/NiferoSite.tsx` — site UI, portfolio filtering, navigation and contact demo
+- `components/NiferoSite.tsx` — site UI, portfolio filtering, navigation and contact form
+- `app/thank-you/page.tsx` — confirmation after successful submission
+- `app/admin/page.tsx` — private enquiries dashboard
 - `postcss.config.mjs` — Tailwind PostCSS integration
 
-## Before going live
+## Enquiry setup
 
-- **Contact form:** Currently deliberately disabled from sending until you configure it. In `components/NiferoSite.tsx`, replace `REPLACE_WITH_YOUR_EMAIL@example.com` with a real mailbox to enable a `mailto:` handoff, or use a server-side form endpoint (recommended for reliable delivery). Don't ship the placeholder as though it were live.
-- **Portfolio:** The three examples are explicitly labelled *concepts*, not completed projects. Replace with genuine case studies as appropriate.
-- **Company details and privacy:** Add real contact, company/trading, privacy and cookie information as applicable.
-- **Domain and deployment:** Import the project into Vercel, choose the Next.js framework, deploy, then connect `nifero.co.uk` in project settings.
-- **Maintenance services:** Establish backup and update procedures, service scope and response times before selling contracts.
+1. Create a Supabase project. Run `supabase/migrations/202611150001_enquiries.sql` in its SQL Editor or apply it with the Supabase CLI.
+2. Disable public user sign-ups in Supabase Auth. In **Authentication → Users**, create and confirm the owner's email/password account. Copy its user UUID and run this once in the SQL Editor:
+
+   ```sql
+   insert into public.enquiry_admins (user_id)
+   values ('REPLACE_WITH_YOUR_USER_UUID'::uuid)
+   on conflict do nothing;
+   ```
+
+3. Set the variables from `.env.example` in your hosting provider and redeploy. Keep the Supabase secret key in server environment variables. Use a separate Supabase project for preview deployments that accept test submissions.
+4. Submit a test enquiry. Check that the site redirects to `/thank-you` and that the enquiry appears after signing in at `/admin`. In a signed-out window, verify that `/admin` shows the sign-in form.
+
+For rate limiting, the app uses the sender address and, on Vercel, the platform-provided client IP. Both are hashed in the rate-limit table.
+
+The three portfolio examples are labelled as concepts. Confirm business details and privacy information before opening the live contact form to the public.
 
 ## Design
 
 Palette: forest `#111a15`, ink `#17211c`, mist `#f4f5ef`, lime `#cff47c`.
 Fonts: Manrope (headings) and DM Sans (body).
-
-## Note
-
-The project is ready for local installation, but dependencies must be installed on your machine. No real submissions, client projects, or success metrics have been fabricated.
