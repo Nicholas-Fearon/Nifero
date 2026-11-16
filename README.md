@@ -42,6 +42,8 @@ npm run dev
 
 For rate limiting, the app uses the sender address and, on Vercel, the platform-provided client IP. Both are hashed in the rate-limit table.
 
+Review the records in Supabase’s `enquiries` table regularly and remove those you no longer need under the privacy notice. Enquiry deletion is manual.
+
 The public portfolio shows three sample designs labelled as concepts.
 
 ## Design

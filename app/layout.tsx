@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
+import SiteFooter from "@/components/SiteFooter";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -33,8 +34,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-GB">
-      <body className={`${dmSans.variable} ${manrope.variable} font-sans`}>
-        {children}
+      <body className={`${dmSans.variable} ${manrope.variable} flex min-h-screen flex-col font-sans`}>
+        <div className="flex flex-1 flex-col">{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );

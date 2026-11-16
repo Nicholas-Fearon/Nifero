@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ArrowRight,
@@ -99,14 +100,14 @@ const faqs = [
   ],
 ];
 
-function Logo({ light = false }: { light?: boolean }) {
+function Logo() {
   return (
     <a
       href="#home"
       aria-label="Nifero home"
-      className={`font-display text-[32px] font-extrabold tracking-[-.095em] ${light ? "text-white" : "text-ink"}`}
+      className="font-display text-[32px] font-extrabold tracking-[-.095em] text-ink"
     >
-      Nifero<span className={light ? "text-gold" : "text-celtic"}>.</span>
+      Nifero<span className="text-celtic">.</span>
     </a>
   );
 }
@@ -508,7 +509,10 @@ export default function NiferoSite() {
                   {sending ? "Sending enquiry…" : "Send enquiry"} <ArrowRight size={16} />
                 </button>
                 <p className="text-sm text-muted">
-                  I’ll use your details to respond to your enquiry.
+                  I’ll use your details to respond to your enquiry. Read the{" "}
+                  <Link href="/privacy" className="font-semibold text-celtic underline underline-offset-4">
+                    privacy notice
+                  </Link>.
                 </p>
               </fieldset>
               <div role="status" aria-live="polite">
@@ -520,21 +524,6 @@ export default function NiferoSite() {
           </div>
         </section>
       </main>
-      <footer className="bg-forest text-white">
-        <div className="mx-auto max-w-[1160px] px-5 py-12 sm:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-6">
-            <Logo light />
-            <div className="flex gap-5 text-sm">
-              <a href="#services">Services</a>
-              <a href="#work">Design concepts</a>
-              <a href="#contact">Contact</a>
-            </div>
-          </div>
-          <div className="mt-10 border-t border-[#397252] pt-6 text-xs text-[#c7e3d0]">
-            © {new Date().getFullYear()} Nifero.
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

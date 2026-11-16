@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ThankYouPage() {
   return (
-    <main className="grid min-h-screen place-items-center bg-forest px-5 py-12 text-white sm:px-8">
+    <main className="grid flex-1 place-items-center bg-forest px-5 py-12 text-white sm:px-8">
       <div className="w-full max-w-xl rounded-3xl border border-white/20 px-6 py-10 sm:px-12 sm:py-14">
         <h1 className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
           We’ve received your enquiry
