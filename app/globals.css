@@ -5,8 +5,10 @@
   --color-mist: #f4f5ef;
   --color-lime: #cff47c;
   --color-muted: #66726c;
-  --font-sans: "DM Sans", Arial, sans-serif;
-  --font-display: "Manrope", Arial, sans-serif;
+}
+@theme inline {
+  --font-sans: var(--font-dm-sans), Arial, sans-serif;
+  --font-display: var(--font-manrope), Arial, sans-serif;
 }
 :root {
   color-scheme: light;
@@ -23,7 +25,7 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-manrope), Arial, sans-serif;
   letter-spacing: -0.055em;
 }
 button {

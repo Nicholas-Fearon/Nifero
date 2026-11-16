@@ -52,7 +52,7 @@ export default async function AdminPage({
       <header className="bg-forest text-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
           <Link href="/" aria-label="Nifero home" className="font-display text-3xl font-extrabold tracking-[-.095em]">
-            nifero<span className="text-lime">.</span>
+            Nifero<span className="text-lime">.</span>
           </Link>
           {user && (
             <form action={signOut}>
@@ -70,7 +70,7 @@ export default async function AdminPage({
             {notice}
           </p>
         )}
-        {!configured && <p>The enquiry dashboard needs to be connected to Supabase.</p>}
+        {!configured && <p role="alert">Admin sign-in is currently unavailable.</p>}
         {configured && !user && (
           <form action={signIn} className="grid max-w-md gap-3 rounded-3xl bg-white p-6 shadow-sm sm:p-8">
             <h2 className="mb-2 font-display text-xl font-extrabold">Admin sign-in</h2>
@@ -81,8 +81,8 @@ export default async function AdminPage({
             <button className={`mt-2 ${button}`}>Sign in</button>
           </form>
         )}
-        {user && !admin && <p>This account doesn’t have access to the enquiry dashboard.</p>}
-        {results?.error && <p role="alert">Couldn’t load enquiries. Refresh the page to try again.</p>}
+        {user && !admin && <p>This account doesn’t have access to enquiries.</p>}
+        {results?.error && <p role="alert">Enquiries couldn’t be loaded. Refresh the page to try again.</p>}
         {results?.data && entries.length === 0 && (
           <p className="rounded-2xl border border-[#dce2d8] bg-white p-6">
             {page === 1 ? "No enquiries yet." : "There are no enquiries on this page."}

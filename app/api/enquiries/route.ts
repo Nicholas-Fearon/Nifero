@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const emailPattern = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i;
 const maxRequestBytes = 40_000;
-const unavailable = "We couldn’t save your enquiry. Please try again in a few minutes.";
+const unavailable = "Your enquiry could not be saved. Please try again in a few minutes.";
 
 function readField(data: Record<string, unknown>, key: string) {
   return typeof data[key] === "string" ? data[key].trim() : "";
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     !message || message.length > enquiryLimits.message || message.includes("\0")
   ) {
     return Response.json({
-      message: "Check your name, email address, service and message, then try again.",
+      message: "Check your name and email address, choose a service and enter your project details.",
     }, { status: 400 });
   }
 

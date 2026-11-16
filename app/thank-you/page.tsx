@@ -14,10 +14,10 @@ export default function ThankYouPage() {
           We’ve received your enquiry
         </h1>
         <p className="mt-4 text-lg leading-8 text-[#d7e0d8]">
-          Thanks for getting in touch. We’ll get back to you soon.
+          Thanks for getting in touch. I’ll reply to the email address you provided.
         </p>
         <Link href="/" className="mt-8 inline-flex rounded-full bg-lime px-6 py-3 text-sm font-bold text-forest">
-          Back to Nifero
+          Back to the homepage
         </Link>
       </div>
     </main>

@@ -42,7 +42,7 @@ npm run dev
 
 For rate limiting, the app uses the sender address and, on Vercel, the platform-provided client IP. Both are hashed in the rate-limit table.
 
-The three portfolio examples are labelled as concepts. Confirm business details and privacy information before opening the live contact form to the public.
+The public portfolio shows three sample designs labelled as concepts.
 
 ## Design
 

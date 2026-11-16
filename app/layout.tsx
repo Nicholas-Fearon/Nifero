@@ -13,14 +13,17 @@ const manrope = Manrope({
   display: "swap",
 });
 
+const title = "Nifero | Web Design & Development in Suffolk";
+const description =
+  "Independent web development studio in Suffolk. Website design, maintenance and custom web applications for businesses across the UK.";
+
 export const metadata: Metadata = {
-  title: "Nifero — Web Development & Digital Solutions",
-  description:
-    "Nifero is an independent web development studio building business websites, maintaining websites and developing practical digital solutions.",
+  title,
+  description,
   metadataBase: new URL("https://nifero.co.uk"),
   openGraph: {
-    title: "Nifero — Web Development & Digital Solutions",
-    description: "Better websites. Smarter business.",
+    title,
+    description,
     type: "website",
   },
 };
@@ -30,10 +33,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-GB">
-      <body
-        className={`${dmSans.variable} ${manrope.variable} font-sans`}
-        style={{ fontFamily: "var(--font-dm-sans)" }}
-      >
+      <body className={`${dmSans.variable} ${manrope.variable} font-sans`}>
         {children}
       </body>
     </html>

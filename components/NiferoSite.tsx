@@ -3,7 +3,6 @@
 import { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
-  ArrowDown,
   ArrowRight,
   ArrowUpRight,
   Menu,
@@ -13,38 +12,33 @@ import { enquiryLimits, enquiryServices } from "@/lib/enquiry-fields";
 
 const services = [
   {
-    num: "01 / BUILD",
     title: "Website design & development",
-    body: "Thoughtfully built websites that look sharp, work smoothly and make it easy for customers to take the next step.",
+    body: "Give customers a clear, easy-to-use website where they can find your services and get in touch on any device.",
     note: "New websites & redesigns",
     featured: true,
   },
   {
-    num: "02 / CARE",
     title: "Website maintenance & support",
-    body: "Planned updates, monitoring, backups and agreed technical support to keep your website running reliably.",
+    body: "Keep your website running with planned updates, monitoring, backups and technical support.",
     note: "Monthly plans available",
   },
   {
-    num: "03 / IMPROVE",
     title: "Repairs, performance & optimisation",
-    body: "Fix what is broken, improve speed and mobile usability, and make the most of your existing website.",
-    note: "One-off fixes & improvements",
+    body: "Fix broken features, speed up slow pages and make your existing website easier to use on mobile.",
+    note: "One-off projects",
   },
   {
-    num: "04 / SOLVE",
-    title: "Custom web solutions",
-    body: "Booking tools, portals, dashboards and practical workflows built around how your business actually operates.",
-    note: "Scoped & quoted individually",
+    title: "Custom web applications",
+    body: "Manage bookings, give customers a place to access information or bring business data together in a dashboard.",
+    note: "Quoted to suit the project",
   },
 ];
 const concepts = [
   {
     id: "local",
     category: "website",
-    label: "Concept / Business website",
-    name: "Local business presence",
-    body: "A polished, mobile-first website to help customers discover, understand and contact a local business.",
+    name: "Local business website",
+    body: "A service-led homepage with clear contact details and enquiry options for customers on mobile.",
     art: "the local.",
     style: "bg-[#d7e8c8]",
     inner: "bg-white text-[#233e26]",
@@ -52,9 +46,8 @@ const concepts = [
   {
     id: "booking",
     category: "app",
-    label: "Concept / Booking solution",
-    name: "Smarter bookings",
-    body: "A clear booking experience for appointments or sessions, with availability management.",
+    name: "Online booking",
+    body: "An appointment booking flow where customers can see available times and choose a slot.",
     art: "bookwise.",
     style: "bg-[#263c35]",
     inner: "bg-[#15221c] text-lime border border-[#4a6756]",
@@ -62,9 +55,8 @@ const concepts = [
   {
     id: "dashboard",
     category: "app",
-    label: "Concept / Business dashboard",
-    name: "Better business visibility",
-    body: "A dashboard concept that brings key business information together in one useful place.",
+    name: "Business dashboard",
+    body: "A single view of key figures and activity to help a team keep track of its work.",
     art: "overview.",
     style: "bg-[#e8ddcf]",
     inner: "bg-[#f4eee4] text-[#41362d]",
@@ -72,42 +64,38 @@ const concepts = [
 ];
 const steps = [
   [
-    "01",
     "Discover",
-    "We talk through your business, audience, goals and the problem you need to solve.",
+    "We discuss your business, your customers and what the project needs to achieve.",
   ],
   [
-    "02",
     "Plan",
-    "You get a proposal with clear scope, pricing, delivery stages and deliverables.",
+    "I send a written proposal covering the scope, price and delivery stages.",
   ],
   [
-    "03",
-    "Build",
-    "Your project is developed and tested, with feedback at agreed milestones.",
+    "Build & test",
+    "I design, build and test the site. You review the work at agreed stages.",
   ],
   [
-    "04",
-    "Support",
-    "Choose ongoing care or request further improvements after launch.",
+    "Launch & support",
+    "Once the site is live, you can arrange ongoing maintenance or request further updates.",
   ],
 ];
 const faqs = [
   [
-    "Do you only work with new websites?",
-    "No. Nifero can also repair, improve and maintain existing websites, following an initial technical review.",
+    "Can you improve an existing website?",
+    "Yes. I review your site first, then recommend repairs or improvements based on what it needs.",
   ],
   [
     "Do you build WordPress websites?",
-    "Yes. WordPress suits many business websites. For bespoke functionality, custom Next.js and React development is also available.",
+    "Yes. I build and maintain WordPress websites. I also use Next.js and React for projects that need custom functionality.",
   ],
   [
     "Can you take over maintenance of my website?",
-    "Usually, after an onboarding audit of access, plugins, backups, hosting and any existing issues.",
+    "In most cases, yes. I’ll review the hosting, backups, plugins and any known issues before agreeing what the maintenance plan covers.",
   ],
   [
     "How much does a website cost?",
-    "Projects are quoted individually. After an initial discussion you will receive a written proposal outlining scope, price and delivery stages.",
+    "The price depends on the scope of the work. After an initial discussion, I’ll send you a written quote.",
   ],
 ];
 
@@ -149,24 +137,17 @@ function PillLink({
   );
 }
 function Heading({
-  number,
   heading,
   description,
 }: {
-  number: string;
-  heading: React.ReactNode;
+  heading: string;
   description?: string;
 }) {
   return (
     <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-      <div>
-        <p className="mb-3 text-xs font-extrabold uppercase tracking-[.16em] text-[#60842a]">
-          {number}
-        </p>
-        <h2 className="font-display text-4xl font-extrabold leading-[1.1] sm:text-5xl">
-          {heading}
-        </h2>
-      </div>
+      <h2 className="font-display text-4xl font-extrabold leading-[1.1] sm:text-5xl">
+        {heading}
+      </h2>
       {description && (
         <p className="max-w-sm leading-7 text-muted">{description}</p>
       )}
@@ -213,7 +194,7 @@ export default function NiferoSite() {
       submission.current = null;
       router.push("/thank-you");
     } catch {
-      setFormError("We couldn’t send your enquiry. Please check your connection and try again.");
+      setFormError("Your enquiry could not be sent. Please try again.");
     } finally {
       setSending(false);
     }
@@ -227,18 +208,18 @@ export default function NiferoSite() {
             <span className="mr-2 inline-block size-2 rounded-full bg-lime" />
             Independent web development studio
           </span>
-          <span>Based in Suffolk · Working across the UK</span>
+          <span>Suffolk, UK</span>
         </div>
       </div>
       <header className="sticky top-0 z-40 border-b border-[#dfe5dc] bg-mist/95 backdrop-blur-xl">
         <nav className="mx-auto flex h-20 max-w-[1160px] items-center justify-between px-5 sm:px-8">
           <Logo />
-          <div className="hidden items-center gap-8 text-sm font-bold md:flex">
+          <div className="hidden items-center gap-5 text-sm font-bold md:flex lg:gap-8">
             <a href="#services" className="hover:text-[#668b2b]">
               Services
             </a>
             <a href="#work" className="hover:text-[#668b2b]">
-              Our work
+              Design concepts
             </a>
             <a href="#process" className="hover:text-[#668b2b]">
               Process
@@ -246,7 +227,7 @@ export default function NiferoSite() {
             <a href="#about" className="hover:text-[#668b2b]">
               About
             </a>
-            <PillLink href="#contact">Let&apos;s talk</PillLink>
+            <PillLink href="#contact">Get in touch</PillLink>
           </div>
           <button
             className="rounded-lg p-2 md:hidden"
@@ -261,7 +242,7 @@ export default function NiferoSite() {
           <div className="flex flex-col gap-5 border-t border-[#dfe5dc] px-6 py-6 text-sm font-bold md:hidden">
             {[
               ["Services", "#services"],
-              ["Our work", "#work"],
+              ["Design concepts", "#work"],
               ["Process", "#process"],
               ["About", "#about"],
               ["Contact", "#contact"],
@@ -279,33 +260,26 @@ export default function NiferoSite() {
           <div className="pointer-events-none absolute -right-64 -top-60 size-[690px] rounded-full border border-[#34453a]" />
           <div className="relative mx-auto grid max-w-[1160px] items-center gap-12 px-5 py-24 sm:px-8 lg:min-h-[620px] lg:grid-cols-[1.1fr_.9fr] lg:py-16">
             <div>
-              <p className="mb-7 flex items-center gap-3 text-xs font-extrabold uppercase tracking-[.16em] text-lime">
-                <span className="h-0.5 w-6 bg-lime" />
-                Web development & digital solutions
-              </p>
-              <h1 className="font-display text-[clamp(3.3rem,6.4vw,5.8rem)] font-extrabold leading-[1.08] tracking-[-.075em]">
-                Better websites.
+              <h1 className="font-display text-[clamp(2.65rem,6.4vw,5.8rem)] font-extrabold leading-[1.08] tracking-[-.075em]">
+                Web design and
                 <br />
-                <span className="text-lime">Smarter business.</span>
+                <span className="text-lime">development</span>
               </h1>
               <p className="mt-7 max-w-lg text-lg leading-8 text-[#b6c5ba]">
-                Modern websites, dependable maintenance and practical digital
-                solutions built to help your business move forward.
+                I build and maintain websites for businesses across the UK. I also develop
+                booking systems, dashboards and other custom web applications.
               </p>
               <div className="mt-9 flex flex-wrap gap-3">
                 <PillLink href="#contact" light>
-                  Start a project
+                  Discuss your project
                 </PillLink>
                 <PillLink href="#services" outline>
-                  Explore services
+                  View services
                 </PillLink>
               </div>
-              <p className="mt-9 text-xs text-[#8fa294]">
-                Personal service · Clear communication · Built with purpose
-              </p>
             </div>
             <div
-              aria-label="Illustrative website dashboard design"
+              aria-hidden="true"
               className="relative mx-auto h-[350px] w-full max-w-[470px] sm:h-[440px]"
             >
               <div className="absolute right-1 top-8 w-[96%] rotate-3 overflow-hidden rounded-[18px] border border-[#9daaa0] bg-[#f6f8f3] text-ink shadow-[0_25px_85px_#0008]">
@@ -318,18 +292,11 @@ export default function NiferoSite() {
                   ))}
                 </div>
                 <div className="p-7 sm:p-9">
-                  <span className="rounded-full bg-[#dcf4af] px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-[#335019]">
-                    Your business online
-                  </span>
-                  <h3 className="mt-6 font-display text-3xl font-extrabold leading-tight sm:text-4xl">
-                    Designed to make
-                    <br />
-                    an impact.
-                  </h3>
-                  <p className="mt-3 max-w-xs text-sm leading-6 text-[#617168]">
-                    Beautiful design. Useful features. A better experience for
-                    your customers.
-                  </p>
+                  <div className="h-6 w-24 rounded-full bg-[#dcf4af]" />
+                  <div className="mt-6 h-5 w-4/5 rounded bg-[#183328]" />
+                  <div className="mt-3 h-5 w-3/5 rounded bg-[#183328]" />
+                  <div className="mt-5 h-2 w-full rounded bg-[#c4cdc5]" />
+                  <div className="mt-2 h-2 w-2/3 rounded bg-[#c4cdc5]" />
                   <div className="mt-6 flex h-28 items-end justify-evenly rounded-xl bg-[#183328] px-4 pt-5">
                     {[45, 70, 55, 84, 66, 100].map((h, i) => (
                       <span
@@ -341,48 +308,21 @@ export default function NiferoSite() {
                   </div>
                 </div>
               </div>
-              <div className="absolute bottom-4 left-0 -rotate-6 rounded-2xl bg-[#d5f28d] px-6 py-5 text-[#203019] shadow-xl sm:-left-7">
-                <strong className="font-display text-3xl font-extrabold">
-                  100%
-                </strong>
-                <p className="mt-1 text-xs font-bold">Focused on your goals</p>
-              </div>
             </div>
           </div>
         </section>
-        <div className="border-b border-[#dce2d8] bg-[#e9ece4]">
-          <div className="mx-auto flex max-w-[1160px] flex-wrap items-center justify-between gap-3 px-5 py-6 text-xs font-extrabold uppercase tracking-[.1em] text-[#657568] sm:px-8">
-            <span>Modern development</span>
-            <span>Personal approach</span>
-            <span>Reliable support</span>
-            <span>Practical solutions</span>
-          </div>
-        </div>
         <section
           id="services"
           className="mx-auto max-w-[1160px] px-5 py-24 sm:px-8"
         >
-          <Heading
-            number="01 / What we do"
-            heading={
-              <>
-                The right solution.
-                <br />
-                For the right problem.
-              </>
-            }
-            description="From a new website to ongoing support and custom tools, straightforward solutions shaped around your business."
-          />
+          <Heading heading="Services" />
           <div className="grid gap-5 md:grid-cols-2">
             {services.map((s) => (
               <article
-                key={s.num}
-                className={`flex min-h-[290px] flex-col rounded-[23px] border border-[#dce2d8] p-8 transition-transform hover:-translate-y-1 ${s.featured ? "bg-[#d5ef9d]" : "bg-white"}`}
+                key={s.title}
+                className={`flex flex-col rounded-[23px] border border-[#dce2d8] p-8 transition-transform hover:-translate-y-1 ${s.featured ? "bg-[#d5ef9d]" : "bg-white"}`}
               >
-                <p className="text-xs font-extrabold tracking-wider text-[#718474]">
-                  {s.num}
-                </p>
-                <h3 className="mb-4 mt-8 max-w-sm font-display text-[29px] font-bold leading-tight">
+                <h3 className="mb-4 max-w-sm font-display text-[29px] font-bold leading-tight">
                   {s.title}
                 </h3>
                 <p className="max-w-md text-[15px] leading-7 text-[#536359]">
@@ -407,24 +347,17 @@ export default function NiferoSite() {
         <section id="work" className="bg-[#e9ede5] py-24">
           <div className="mx-auto max-w-[1160px] px-5 sm:px-8">
             <Heading
-              number="02 / Portfolio"
-              heading={
-                <>
-                  Made to solve
-                  <br />
-                  real problems.
-                </>
-              }
-              description="Examples of digital experiences Nifero could build. These are illustrative concepts, not completed client projects."
+              heading="Design concepts"
+              description="Sample designs for a business website, a booking system and a dashboard."
             />
             <div
               className="mb-8 flex flex-wrap gap-2"
               role="group"
-              aria-label="Filter portfolio concepts"
+              aria-label="Filter design concepts"
             >
               {(
                 [
-                  ["all", "All concepts"],
+                  ["all", "All designs"],
                   ["website", "Websites"],
                   ["app", "Web applications"],
                 ] as const
@@ -446,6 +379,7 @@ export default function NiferoSite() {
                   className="overflow-hidden rounded-[20px] border border-[#d8dfd5] bg-white"
                 >
                   <div
+                    aria-hidden="true"
                     className={`flex h-[220px] items-center justify-center p-6 ${c.style}`}
                   >
                     <div
@@ -456,16 +390,10 @@ export default function NiferoSite() {
                       </p>
                       <div className="mt-4 h-2 rounded-full bg-current opacity-10" />
                       <div className="mt-2 h-2 w-1/2 rounded-full bg-current opacity-10" />
-                      <span className="mt-4 inline-block rounded-full bg-[#314631] px-3 py-2 text-[9px] text-white">
-                        Explore concept ↗
-                      </span>
                     </div>
                   </div>
                   <div className="p-6">
-                    <p className="text-[11px] font-extrabold uppercase tracking-wide text-[#628a2d]">
-                      {c.label}
-                    </p>
-                    <h3 className="my-2 font-display text-xl font-extrabold">
+                    <h3 className="mb-2 font-display text-xl font-extrabold">
                       {c.name}
                     </h3>
                     <p className="text-sm leading-6 text-muted">{c.body}</p>
@@ -473,34 +401,17 @@ export default function NiferoSite() {
                 </article>
               ))}
             </div>
-            <p className="mt-5 text-sm text-muted">
-              Portfolio items are illustrative and should be replaced with real
-              case studies and verified results.
-            </p>
           </div>
         </section>
         <section
           id="process"
           className="mx-auto max-w-[1160px] px-5 py-24 sm:px-8"
         >
-          <Heading
-            number="03 / How it works"
-            heading={
-              <>
-                Simple process.
-                <br />
-                No guesswork.
-              </>
-            }
-            description="Work directly with the developer from the first conversation through launch and support."
-          />
+          <Heading heading="How projects work" />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map(([n, title, body]) => (
-              <div key={n} className="border-t-2 border-[#bac9b4] pt-6">
-                <span className="text-sm font-extrabold text-[#77994c]">
-                  {n}
-                </span>
-                <h3 className="mb-3 mt-8 font-display text-2xl font-bold">
+            {steps.map(([title, body]) => (
+              <div key={title} className="border-t-2 border-[#bac9b4] pt-6">
+                <h3 className="mb-3 font-display text-2xl font-bold">
                   {title}
                 </h3>
                 <p className="text-sm leading-7 text-muted">{body}</p>
@@ -510,70 +421,36 @@ export default function NiferoSite() {
         </section>
         <section id="about" className="bg-forest py-24 text-white">
           <div className="mx-auto grid max-w-[1160px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[.75fr_1.25fr]">
-            <div className="flex min-h-[335px] flex-col justify-between overflow-hidden rounded-[25px] bg-[#26372c] p-9">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#cce8af]">
-                The person behind Nifero
-              </span>
+            <div className="rounded-[25px] bg-[#26372c] p-9">
               <strong className="font-display text-4xl font-extrabold leading-tight">
-                Small studio.
-                <br />
-                Big-picture thinking.
+                Nicholas Fearon
               </strong>
-              <span className="text-xs text-[#cce8af]">
-                Independent by design.
-              </span>
+              <p className="mt-3 text-[#cce8af]">Independent web developer</p>
             </div>
             <div>
-              <p className="mb-4 text-xs font-extrabold uppercase tracking-widest text-lime">
-                04 / About Nifero
-              </p>
               <h2 className="mb-7 font-display text-4xl font-extrabold leading-tight sm:text-5xl">
-                Personal service.
-                <br />
-                Practical solutions.
+                About Nifero
               </h2>
               <p className="mb-4 text-[17px] leading-8 text-[#b4c2b6]">
-                Hi, I&apos;m Nicholas Fearon, the developer behind Nifero. I
-                combine hands-on web development with experience running a
-                business, so I understand that a website should do more than
-                look good. It needs to be clear, reliable and useful.
+                I run Nifero, an independent web development studio in Suffolk.
+                You’ll work directly with me from the first conversation through launch.
               </p>
               <p className="text-[17px] leading-8 text-[#b4c2b6]">
-                I build with modern technologies and WordPress, choosing the
-                approach that fits the project rather than forcing every
-                business into the same template.
+                My experience running a business shapes how I approach each site.
+                I start with what your customers need to find and what you need the site to do.
               </p>
-              <div className="mt-7 flex flex-wrap gap-2">
-                {[
-                  "Next.js & React",
-                  "WordPress",
-                  "Tailwind CSS",
-                  "Supabase",
-                  "Business-first thinking",
-                ].map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full border border-[#49604e] px-3 py-2 text-xs font-semibold text-[#d8e7d6]"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
             </div>
           </div>
         </section>
         <section className="mx-auto max-w-[900px] px-5 py-24 sm:px-8">
-          <p className="mb-4 text-xs font-extrabold uppercase tracking-widest text-[#60842a]">
-            Good to know
-          </p>
           <h2 className="mb-8 font-display text-4xl font-extrabold sm:text-5xl">
-            Frequently asked questions.
+            Frequently asked questions
           </h2>
           {faqs.map(([q, a]) => (
             <details key={q} className="group border-b border-[#dce2d8] py-6">
               <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-base font-extrabold marker:hidden">
                 {q}
-                <span className="text-xl text-[#718b55] group-open:rotate-45">
+                <span aria-hidden="true" className="text-xl text-[#718b55] group-open:rotate-45">
                   +
                 </span>
               </summary>
@@ -584,25 +461,13 @@ export default function NiferoSite() {
         <section id="contact" className="bg-[#d5ee9d] py-24">
           <div className="mx-auto grid max-w-[1160px] gap-12 px-5 sm:px-8 lg:grid-cols-2">
             <div>
-              <p className="mb-4 text-xs font-extrabold uppercase tracking-widest">
-                05 / Let&apos;s talk
-              </p>
               <h2 className="font-display text-5xl font-extrabold leading-[1.1] sm:text-6xl">
-                Have a project
-                <br />
-                in mind?
+                Discuss your project
               </h2>
               <p className="mt-7 max-w-md text-lg leading-8 text-[#43543d]">
-                Whether you need a new website, support with an existing one or
-                a tailored digital solution, tell me what you&apos;re working
-                on.
+                Tell me what you need and what you’d like to achieve.
+                If you have an existing site or a target launch date, include those details.
               </p>
-              <p className="mt-7 font-bold">
-                Based in Suffolk. Working across the UK.
-              </p>
-              <div className="mt-9 flex items-center gap-2 text-sm font-bold">
-                <ArrowDown size={18} /> Start with a conversation
-              </div>
             </div>
             <form
               onSubmit={handleSubmit}
@@ -620,7 +485,6 @@ export default function NiferoSite() {
                   required
                   maxLength={enquiryLimits.name}
                   autoComplete="name"
-                  placeholder="Your name"
                   className="rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]"
                 />
                 <label className="text-sm font-bold" htmlFor="email">
@@ -643,12 +507,14 @@ export default function NiferoSite() {
                   id="service"
                   name="service"
                   required
+                  defaultValue=""
                   className="rounded-xl border border-[#dce2d8] bg-white px-4 py-3 focus:outline-[#83a93b]"
                 >
+                  <option value="" disabled>Select a service</option>
                   {enquiryServices.map((service) => <option key={service}>{service}</option>)}
                 </select>
                 <label className="text-sm font-bold" htmlFor="message">
-                  Tell me about your project
+                  Project details
                 </label>
                 <textarea
                   id="message"
@@ -656,7 +522,6 @@ export default function NiferoSite() {
                   required
                   maxLength={enquiryLimits.message}
                   rows={4}
-                  placeholder="A little about what you need..."
                   className="rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]"
                 />
                 <div hidden>
@@ -669,6 +534,9 @@ export default function NiferoSite() {
                 >
                   {sending ? "Sending enquiry…" : "Send enquiry"} <ArrowRight size={16} />
                 </button>
+                <p className="text-sm text-muted">
+                  I’ll use your details to respond to your enquiry.
+                </p>
               </fieldset>
               <div role="status" aria-live="polite">
                 {formError && (
@@ -683,12 +551,9 @@ export default function NiferoSite() {
         <div className="mx-auto max-w-[1160px] px-5 py-12 sm:px-8">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <Logo light />
-            <p className="text-sm text-[#a6b8aa]">
-              Modern websites. Reliable support. Practical solutions.
-            </p>
             <div className="flex gap-5 text-sm">
               <a href="#services">Services</a>
-              <a href="#work">Work</a>
+              <a href="#work">Design concepts</a>
               <a href="#contact">Contact</a>
             </div>
           </div>
