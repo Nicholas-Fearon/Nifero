@@ -23,7 +23,7 @@ const messages: Record<string, string> = {
 };
 
 const button = "rounded-full bg-ink px-5 py-3 text-sm font-bold text-white";
-const input = "rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]";
+const input = "rounded-xl border border-[#d7e3d9] px-4 py-3 focus:outline-[#007a33]";
 
 export default async function AdminPage({
   searchParams,
@@ -52,7 +52,7 @@ export default async function AdminPage({
       <header className="bg-forest text-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
           <Link href="/" aria-label="Nifero home" className="font-display text-3xl font-extrabold tracking-[-.095em]">
-            Nifero<span className="text-lime">.</span>
+            Nifero<span className="text-gold">.</span>
           </Link>
           {user && (
             <form action={signOut}>
@@ -66,7 +66,7 @@ export default async function AdminPage({
       <main className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
         <h1 className="mb-6 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">Enquiries</h1>
         {notice && (
-          <p role="status" className="mb-5 rounded-xl border border-[#dce2d8] bg-white px-4 py-3 text-sm font-semibold">
+          <p role="status" className="mb-5 rounded-xl border border-[#d7e3d9] bg-white px-4 py-3 text-sm font-semibold">
             {notice}
           </p>
         )}
@@ -84,20 +84,20 @@ export default async function AdminPage({
         {user && !admin && <p>This account doesn’t have access to enquiries.</p>}
         {results?.error && <p role="alert">Enquiries couldn’t be loaded. Refresh the page to try again.</p>}
         {results?.data && entries.length === 0 && (
-          <p className="rounded-2xl border border-[#dce2d8] bg-white p-6">
+          <p className="rounded-2xl border border-[#d7e3d9] bg-white p-6">
             {page === 1 ? "No enquiries yet." : "There are no enquiries on this page."}
           </p>
         )}
         <div className="grid gap-4">
           {entries.slice(0, pageSize).map((enquiry) => (
-            <details key={enquiry.id} className="rounded-2xl border border-[#dce2d8] bg-white">
-              <summary className="cursor-pointer rounded-2xl p-5 focus-visible:outline-[#83a93b]">
+            <details key={enquiry.id} className="rounded-2xl border border-[#d7e3d9] bg-white">
+              <summary className="cursor-pointer rounded-2xl p-5 focus-visible:outline-[#007a33]">
                 <span className="ml-2 font-bold break-words">{enquiry.name}</span>
                 <span className="mt-1 block pl-6 text-sm text-muted">
                   {enquiry.service} · <time dateTime={enquiry.created_at}>{dateFormat.format(new Date(enquiry.created_at))}</time>
                 </span>
               </summary>
-              <div className="grid gap-4 border-t border-[#dce2d8] p-5">
+              <div className="grid gap-4 border-t border-[#d7e3d9] p-5">
                 <a href={`mailto:${encodeURIComponent(enquiry.email)}`} className="w-fit break-all font-bold underline">
                   {enquiry.email}
                 </a>

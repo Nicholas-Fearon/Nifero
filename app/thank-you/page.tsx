@@ -13,10 +13,10 @@ export default function ThankYouPage() {
         <h1 className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
           We’ve received your enquiry
         </h1>
-        <p className="mt-4 text-lg leading-8 text-[#d7e0d8]">
+        <p className="mt-4 text-lg leading-8 text-[#e9f6ed]">
           Thanks for getting in touch. I’ll reply to the email address you provided.
         </p>
-        <Link href="/" className="mt-8 inline-flex rounded-full bg-lime px-6 py-3 text-sm font-bold text-forest">
+        <Link href="/" className="mt-8 inline-flex rounded-full bg-gold px-6 py-3 text-sm font-bold text-ink">
           Back to the homepage
         </Link>
       </div>

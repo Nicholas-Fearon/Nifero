@@ -1,10 +1,11 @@
 @import "tailwindcss";
 @theme {
-  --color-ink: #17211c;
-  --color-forest: #111a15;
-  --color-mist: #f4f5ef;
-  --color-lime: #cff47c;
-  --color-muted: #66726c;
+  --color-ink: #18211c;
+  --color-forest: #123326;
+  --color-mist: #faf8f1;
+  --color-gold: #ba9653;
+  --color-celtic: #007a33;
+  --color-muted: #4c5a50;
 }
 @theme inline {
   --font-sans: var(--font-dm-sans), Arial, sans-serif;
@@ -35,6 +36,6 @@ button:disabled {
   cursor: not-allowed;
 }
 ::selection {
-  background: #cff47c;
-  color: #17211c;
+  background: #ba9653;
+  color: #18211c;
 }

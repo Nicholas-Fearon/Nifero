@@ -40,8 +40,8 @@ const concepts = [
     name: "Local business website",
     body: "A service-led homepage with clear contact details and enquiry options for customers on mobile.",
     art: "the local.",
-    style: "bg-[#d7e8c8]",
-    inner: "bg-white text-[#233e26]",
+    style: "bg-[#d6eadd]",
+    inner: "bg-white text-[#00421f]",
   },
   {
     id: "booking",
@@ -49,8 +49,8 @@ const concepts = [
     name: "Online booking",
     body: "An appointment booking flow where customers can see available times and choose a slot.",
     art: "bookwise.",
-    style: "bg-[#263c35]",
-    inner: "bg-[#15221c] text-lime border border-[#4a6756]",
+    style: "bg-[#007a33]",
+    inner: "bg-[#004221] text-gold border border-[#3a7953]",
   },
   {
     id: "dashboard",
@@ -58,8 +58,8 @@ const concepts = [
     name: "Business dashboard",
     body: "A single view of key figures and activity to help a team keep track of its work.",
     art: "overview.",
-    style: "bg-[#e8ddcf]",
-    inner: "bg-[#f4eee4] text-[#41362d]",
+    style: "bg-[#eee0c8]",
+    inner: "bg-[#faf6eb] text-[#372916]",
   },
 ];
 const steps = [
@@ -106,7 +106,7 @@ function Logo({ light = false }: { light?: boolean }) {
       aria-label="Nifero home"
       className={`font-display text-[32px] font-extrabold tracking-[-.095em] ${light ? "text-white" : "text-ink"}`}
     >
-      Nifero<span className="text-[#83a93b]">.</span>
+      Nifero<span className={light ? "text-gold" : "text-celtic"}>.</span>
     </a>
   );
 }
@@ -122,10 +122,10 @@ function PillLink({
   outline?: boolean;
 }) {
   const styles = outline
-    ? "border border-[#657669] text-white hover:bg-white/10"
+    ? "border border-[#b7dfc5] text-white hover:bg-white/10"
     : light
-      ? "bg-lime text-forest hover:bg-[#ddffa1]"
-      : "bg-ink text-white hover:bg-[#304837]";
+      ? "bg-gold text-ink hover:bg-[#d6b77b]"
+      : "bg-forest text-mist hover:bg-celtic";
   return (
     <a
       className={`inline-flex items-center justify-center gap-3 rounded-full px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5 ${styles}`}
@@ -202,30 +202,27 @@ export default function NiferoSite() {
 
   return (
     <>
-      <div className="bg-forest text-[#d7e0d8]">
+      <div className="bg-forest text-[#e9f6ed]">
         <div className="mx-auto flex max-w-[1160px] flex-wrap items-center justify-between gap-2 px-5 py-2.5 text-xs sm:px-8">
           <span>
-            <span className="mr-2 inline-block size-2 rounded-full bg-lime" />
+            <span className="mr-2 inline-block size-2 rounded-full bg-gold" />
             Independent web development studio
           </span>
           <span>Suffolk, UK</span>
         </div>
       </div>
-      <header className="sticky top-0 z-40 border-b border-[#dfe5dc] bg-mist/95 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-[#d5e3d8] bg-mist/95 backdrop-blur-xl">
         <nav className="mx-auto flex h-20 max-w-[1160px] items-center justify-between px-5 sm:px-8">
           <Logo />
           <div className="hidden items-center gap-5 text-sm font-bold md:flex lg:gap-8">
-            <a href="#services" className="hover:text-[#668b2b]">
+            <a href="#services" className="hover:text-[#007a33]">
               Services
             </a>
-            <a href="#work" className="hover:text-[#668b2b]">
+            <a href="#work" className="hover:text-[#007a33]">
               Design concepts
             </a>
-            <a href="#process" className="hover:text-[#668b2b]">
+            <a href="#process" className="hover:text-[#007a33]">
               Process
-            </a>
-            <a href="#about" className="hover:text-[#668b2b]">
-              About
             </a>
             <PillLink href="#contact">Get in touch</PillLink>
           </div>
@@ -239,12 +236,11 @@ export default function NiferoSite() {
           </button>
         </nav>
         {menuOpen && (
-          <div className="flex flex-col gap-5 border-t border-[#dfe5dc] px-6 py-6 text-sm font-bold md:hidden">
+          <div className="flex flex-col gap-5 border-t border-[#d5e3d8] px-6 py-6 text-sm font-bold md:hidden">
             {[
               ["Services", "#services"],
               ["Design concepts", "#work"],
               ["Process", "#process"],
-              ["About", "#about"],
               ["Contact", "#contact"],
             ].map(([name, href]) => (
               <a key={href} onClick={() => setMenuOpen(false)} href={href}>
@@ -256,16 +252,16 @@ export default function NiferoSite() {
       </header>
 
       <main id="home">
-        <section className="relative overflow-hidden bg-forest text-white">
-          <div className="pointer-events-none absolute -right-64 -top-60 size-[690px] rounded-full border border-[#34453a]" />
+        <section className="relative overflow-hidden bg-forest text-mist">
+          <div className="pointer-events-none absolute -right-64 -top-60 size-[690px] rounded-full border border-[#3e6753]" />
           <div className="relative mx-auto grid max-w-[1160px] items-center gap-12 px-5 py-24 sm:px-8 lg:min-h-[620px] lg:grid-cols-[1.1fr_.9fr] lg:py-16">
             <div>
               <h1 className="font-display text-[clamp(2.65rem,6.4vw,5.8rem)] font-extrabold leading-[1.08] tracking-[-.075em]">
                 Web design and
                 <br />
-                <span className="text-lime">development</span>
+                <span className="text-[#dce8de]">development</span>
               </h1>
-              <p className="mt-7 max-w-lg text-lg leading-8 text-[#b6c5ba]">
+              <p className="mt-7 max-w-lg text-lg leading-8 text-[#e9f6ed]">
                 I build and maintain websites for businesses across the UK. I also develop
                 booking systems, dashboards and other custom web applications.
               </p>
@@ -282,26 +278,26 @@ export default function NiferoSite() {
               aria-hidden="true"
               className="relative mx-auto h-[350px] w-full max-w-[470px] sm:h-[440px]"
             >
-              <div className="absolute right-1 top-8 w-[96%] rotate-3 overflow-hidden rounded-[18px] border border-[#9daaa0] bg-[#f6f8f3] text-ink shadow-[0_25px_85px_#0008]">
-                <div className="flex gap-1.5 bg-[#e6eae2] p-4">
+              <div className="absolute right-1 top-8 w-[96%] rotate-3 overflow-hidden rounded-[18px] border border-[#c5d8ca] bg-[#fafcf9] text-ink shadow-[0_25px_85px_#0008]">
+                <div className="flex gap-1.5 bg-[#e0efe3] p-4">
                   {[1, 2, 3].map((n) => (
                     <span
                       key={n}
-                      className="size-2 rounded-full bg-[#adb8ad]"
+                      className="size-2 rounded-full bg-[#92b6a0]"
                     />
                   ))}
                 </div>
                 <div className="p-7 sm:p-9">
-                  <div className="h-6 w-24 rounded-full bg-[#dcf4af]" />
-                  <div className="mt-6 h-5 w-4/5 rounded bg-[#183328]" />
-                  <div className="mt-3 h-5 w-3/5 rounded bg-[#183328]" />
-                  <div className="mt-5 h-2 w-full rounded bg-[#c4cdc5]" />
-                  <div className="mt-2 h-2 w-2/3 rounded bg-[#c4cdc5]" />
-                  <div className="mt-6 flex h-28 items-end justify-evenly rounded-xl bg-[#183328] px-4 pt-5">
+                  <div className="h-6 w-24 rounded-full bg-[#ddbe84]" />
+                  <div className="mt-6 h-5 w-4/5 rounded bg-[#00421f]" />
+                  <div className="mt-3 h-5 w-3/5 rounded bg-[#00421f]" />
+                  <div className="mt-5 h-2 w-full rounded bg-[#b7cdbe]" />
+                  <div className="mt-2 h-2 w-2/3 rounded bg-[#b7cdbe]" />
+                  <div className="mt-6 flex h-28 items-end justify-evenly rounded-xl bg-[#00421f] px-4 pt-5">
                     {[45, 70, 55, 84, 66, 100].map((h, i) => (
                       <span
                         key={i}
-                        className="w-[12%] rounded-t bg-lime"
+                        className="w-[12%] rounded-t bg-gold"
                         style={{ height: `${h}%` }}
                       />
                     ))}
@@ -320,16 +316,16 @@ export default function NiferoSite() {
             {services.map((s) => (
               <article
                 key={s.title}
-                className={`flex flex-col rounded-[23px] border border-[#dce2d8] p-8 transition-transform hover:-translate-y-1 ${s.featured ? "bg-[#d5ef9d]" : "bg-white"}`}
+                className={`flex flex-col rounded-[23px] border border-[#d7e3d9] p-8 transition-transform hover:-translate-y-1 ${s.featured ? "bg-[#e5f2e8]" : "bg-white"}`}
               >
                 <h3 className="mb-4 max-w-sm font-display text-[29px] font-bold leading-tight">
                   {s.title}
                 </h3>
-                <p className="max-w-md text-[15px] leading-7 text-[#536359]">
+                <p className="max-w-md text-[15px] leading-7 text-[#3e5144]">
                   {s.body}
                 </p>
                 <div className="mt-auto flex items-center justify-between gap-3 pt-6">
-                  <small className="text-xs font-bold text-[#527b26]">
+                  <small className="text-xs font-bold text-[#00652d]">
                     {s.note}
                   </small>
                   <a
@@ -344,7 +340,7 @@ export default function NiferoSite() {
             ))}
           </div>
         </section>
-        <section id="work" className="bg-[#e9ede5] py-24">
+        <section id="work" className="bg-[#eff5ef] py-24">
           <div className="mx-auto max-w-[1160px] px-5 sm:px-8">
             <Heading
               heading="Design concepts"
@@ -366,7 +362,7 @@ export default function NiferoSite() {
                   key={id}
                   onClick={() => setFilter(id)}
                   aria-pressed={filter === id}
-                  className={`rounded-full border px-5 py-2.5 text-sm font-bold ${filter === id ? "border-ink bg-ink text-white" : "border-[#ced7ca] text-[#4a5a4c]"}`}
+                  className={`rounded-full border px-5 py-2.5 text-sm font-bold ${filter === id ? "border-ink bg-ink text-white" : "border-[#ccdcd0] text-[#254c34]"}`}
                 >
                   {label}
                 </button>
@@ -376,7 +372,7 @@ export default function NiferoSite() {
               {shown.map((c) => (
                 <article
                   key={c.id}
-                  className="overflow-hidden rounded-[20px] border border-[#d8dfd5] bg-white"
+                  className="overflow-hidden rounded-[20px] border border-[#d7e3d9] bg-white"
                 >
                   <div
                     aria-hidden="true"
@@ -410,7 +406,7 @@ export default function NiferoSite() {
           <Heading heading="How projects work" />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map(([title, body]) => (
-              <div key={title} className="border-t-2 border-[#bac9b4] pt-6">
+              <div key={title} className="border-t-2 border-[#9cbea5] pt-6">
                 <h3 className="mb-3 font-display text-2xl font-bold">
                   {title}
                 </h3>
@@ -419,38 +415,15 @@ export default function NiferoSite() {
             ))}
           </div>
         </section>
-        <section id="about" className="bg-forest py-24 text-white">
-          <div className="mx-auto grid max-w-[1160px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[.75fr_1.25fr]">
-            <div className="rounded-[25px] bg-[#26372c] p-9">
-              <strong className="font-display text-4xl font-extrabold leading-tight">
-                Nicholas Fearon
-              </strong>
-              <p className="mt-3 text-[#cce8af]">Independent web developer</p>
-            </div>
-            <div>
-              <h2 className="mb-7 font-display text-4xl font-extrabold leading-tight sm:text-5xl">
-                About Nifero
-              </h2>
-              <p className="mb-4 text-[17px] leading-8 text-[#b4c2b6]">
-                I run Nifero, an independent web development studio in Suffolk.
-                You’ll work directly with me from the first conversation through launch.
-              </p>
-              <p className="text-[17px] leading-8 text-[#b4c2b6]">
-                My experience running a business shapes how I approach each site.
-                I start with what your customers need to find and what you need the site to do.
-              </p>
-            </div>
-          </div>
-        </section>
         <section className="mx-auto max-w-[900px] px-5 py-24 sm:px-8">
           <h2 className="mb-8 font-display text-4xl font-extrabold sm:text-5xl">
             Frequently asked questions
           </h2>
           {faqs.map(([q, a]) => (
-            <details key={q} className="group border-b border-[#dce2d8] py-6">
+            <details key={q} className="group border-b border-[#d7e3d9] py-6">
               <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-base font-extrabold marker:hidden">
                 {q}
-                <span aria-hidden="true" className="text-xl text-[#718b55] group-open:rotate-45">
+                <span aria-hidden="true" className="text-xl text-[#007a33] group-open:rotate-45">
                   +
                 </span>
               </summary>
@@ -458,13 +431,13 @@ export default function NiferoSite() {
             </details>
           ))}
         </section>
-        <section id="contact" className="bg-[#d5ee9d] py-24">
+        <section id="contact" className="bg-[#f2efe5] py-24">
           <div className="mx-auto grid max-w-[1160px] gap-12 px-5 sm:px-8 lg:grid-cols-2">
             <div>
               <h2 className="font-display text-5xl font-extrabold leading-[1.1] sm:text-6xl">
                 Discuss your project
               </h2>
-              <p className="mt-7 max-w-md text-lg leading-8 text-[#43543d]">
+              <p className="mt-7 max-w-md text-lg leading-8 text-[#3e4841]">
                 Tell me what you need and what you’d like to achieve.
                 If you have an existing site or a target launch date, include those details.
               </p>
@@ -485,7 +458,7 @@ export default function NiferoSite() {
                   required
                   maxLength={enquiryLimits.name}
                   autoComplete="name"
-                  className="rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]"
+                  className="rounded-xl border border-[#d7e3d9] px-4 py-3 focus:outline-[#007a33]"
                 />
                 <label className="text-sm font-bold" htmlFor="email">
                   Email address
@@ -498,7 +471,7 @@ export default function NiferoSite() {
                   maxLength={enquiryLimits.email}
                   autoComplete="email"
                   placeholder="you@business.co.uk"
-                  className="rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]"
+                  className="rounded-xl border border-[#d7e3d9] px-4 py-3 focus:outline-[#007a33]"
                 />
                 <label className="text-sm font-bold" htmlFor="service">
                   What can I help with?
@@ -508,7 +481,7 @@ export default function NiferoSite() {
                   name="service"
                   required
                   defaultValue=""
-                  className="rounded-xl border border-[#dce2d8] bg-white px-4 py-3 focus:outline-[#83a93b]"
+                  className="rounded-xl border border-[#d7e3d9] bg-white px-4 py-3 focus:outline-[#007a33]"
                 >
                   <option value="" disabled>Select a service</option>
                   {enquiryServices.map((service) => <option key={service}>{service}</option>)}
@@ -522,7 +495,7 @@ export default function NiferoSite() {
                   required
                   maxLength={enquiryLimits.message}
                   rows={4}
-                  className="rounded-xl border border-[#dce2d8] px-4 py-3 focus:outline-[#83a93b]"
+                  className="rounded-xl border border-[#d7e3d9] px-4 py-3 focus:outline-[#007a33]"
                 />
                 <div hidden>
                   <label htmlFor="website">Leave this field empty</label>
@@ -530,7 +503,7 @@ export default function NiferoSite() {
                 </div>
                 <button
                   type="submit"
-                  className="mt-2 flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-4 text-sm font-bold text-white disabled:opacity-60"
+                  className="mt-2 flex items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-bold text-white disabled:opacity-60"
                 >
                   {sending ? "Sending enquiry…" : "Send enquiry"} <ArrowRight size={16} />
                 </button>
@@ -557,7 +530,7 @@ export default function NiferoSite() {
               <a href="#contact">Contact</a>
             </div>
           </div>
-          <div className="mt-10 border-t border-[#34483b] pt-6 text-xs text-[#9cb09f]">
+          <div className="mt-10 border-t border-[#397252] pt-6 text-xs text-[#c7e3d0]">
             © {new Date().getFullYear()} Nifero.
           </div>
         </div>
