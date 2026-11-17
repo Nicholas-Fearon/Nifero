@@ -3,12 +3,8 @@
 import { useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Menu,
-  X,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Menu, X } from "lucide-react";
+import ConceptExplorer from "@/components/ConceptExplorer";
 import { enquiryLimits, enquiryServices } from "@/lib/enquiry-fields";
 
 const services = [
@@ -16,7 +12,6 @@ const services = [
     title: "Website design & development",
     body: "Give customers a clear, easy-to-use website where they can find your services and get in touch on any device.",
     note: "New websites & redesigns",
-    featured: true,
   },
   {
     title: "Website maintenance & support",
@@ -32,35 +27,6 @@ const services = [
     title: "Custom web applications",
     body: "Manage bookings, give customers a place to access information or bring business data together in a dashboard.",
     note: "Quoted to suit the project",
-  },
-];
-const concepts = [
-  {
-    id: "local",
-    category: "website",
-    name: "Local business website",
-    body: "A service-led homepage with clear contact details and enquiry options for customers on mobile.",
-    art: "the local.",
-    style: "bg-[#d6eadd]",
-    inner: "bg-white text-[#00421f]",
-  },
-  {
-    id: "booking",
-    category: "app",
-    name: "Online booking",
-    body: "An appointment booking flow where customers can see available times and choose a slot.",
-    art: "bookwise.",
-    style: "bg-[#007a33]",
-    inner: "bg-[#004221] text-gold border border-[#3a7953]",
-  },
-  {
-    id: "dashboard",
-    category: "app",
-    name: "Business dashboard",
-    body: "A single view of key figures and activity to help a team keep track of its work.",
-    art: "overview.",
-    style: "bg-[#eee0c8]",
-    inner: "bg-[#faf6eb] text-[#372916]",
   },
 ];
 const steps = [
@@ -111,32 +77,6 @@ function Logo() {
     </a>
   );
 }
-function PillLink({
-  href,
-  children,
-  light = false,
-  outline = false,
-}: {
-  href: string;
-  children: React.ReactNode;
-  light?: boolean;
-  outline?: boolean;
-}) {
-  const styles = outline
-    ? "border border-[#b7dfc5] text-white hover:bg-white/10"
-    : light
-      ? "bg-gold text-ink hover:bg-[#d6b77b]"
-      : "bg-forest text-mist hover:bg-celtic";
-  return (
-    <a
-      className={`inline-flex items-center justify-center gap-3 rounded-full px-6 py-3.5 text-sm font-bold transition-transform hover:-translate-y-0.5 ${styles}`}
-      href={href}
-    >
-      {children}
-      <ArrowUpRight size={17} />
-    </a>
-  );
-}
 function Heading({
   heading,
   description,
@@ -159,14 +99,9 @@ function Heading({
 export default function NiferoSite() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [filter, setFilter] = useState<"all" | "website" | "app">("all");
   const [formError, setFormError] = useState("");
   const [sending, setSending] = useState(false);
   const submission = useRef<{ id: string; payload: string } | null>(null);
-  const shown = concepts.filter(
-    (c) => filter === "all" || c.category === filter,
-  );
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (sending) return;
@@ -203,206 +138,99 @@ export default function NiferoSite() {
 
   return (
     <>
-      <div className="bg-forest text-[#e9f6ed]">
-        <div className="mx-auto flex max-w-[1160px] flex-wrap items-center justify-between gap-2 px-5 py-2.5 text-xs sm:px-8">
-          <span>
-            <span className="mr-2 inline-block size-2 rounded-full bg-gold" />
-            Independent web development studio
-          </span>
-          <span>Suffolk, UK</span>
-        </div>
-      </div>
-      <header className="sticky top-0 z-40 border-b border-[#d5e3d8] bg-mist/95 backdrop-blur-xl">
-        <nav className="mx-auto flex h-20 max-w-[1160px] items-center justify-between px-5 sm:px-8">
+      <header className="reference-header">
+        <nav aria-label="Main navigation" className="reference-container reference-nav">
           <Logo />
-          <div className="hidden items-center gap-5 text-sm font-bold md:flex lg:gap-8">
-            <a href="#services" className="hover:text-[#007a33]">
-              Services
-            </a>
-            <a href="#work" className="hover:text-[#007a33]">
-              Design concepts
-            </a>
-            <a href="#process" className="hover:text-[#007a33]">
-              Process
-            </a>
-            <PillLink href="#contact">Get in touch</PillLink>
+          <div className="reference-desktop-links">
+            <a href="#work">Design concepts</a>
+            <a href="#services">Services</a>
+            <a href="#process">Process</a>
           </div>
+          <a className="reference-button reference-header-cta" href="#contact">
+            Get in touch <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
           <button
-            className="rounded-lg p-2 md:hidden"
-            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+            type="button"
+            className="reference-menu"
             aria-expanded={menuOpen}
+            aria-controls="reference-mobile-nav"
+            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            {menuOpen ? <X /> : <Menu />}
+            {menuOpen ? "Close" : "Menu"}
+            {menuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
           </button>
         </nav>
-        {menuOpen && (
-          <div className="flex flex-col gap-5 border-t border-[#d5e3d8] px-6 py-6 text-sm font-bold md:hidden">
-            {[
-              ["Services", "#services"],
-              ["Design concepts", "#work"],
-              ["Process", "#process"],
-              ["Contact", "#contact"],
-            ].map(([name, href]) => (
-              <a key={href} onClick={() => setMenuOpen(false)} href={href}>
-                {name}
-              </a>
-            ))}
-          </div>
-        )}
+        <nav id="reference-mobile-nav" aria-label="Mobile navigation" className="reference-mobile-nav" hidden={!menuOpen}>
+          {[
+            ["Design concepts", "#work"],
+            ["Services", "#services"],
+            ["Process", "#process"],
+            ["Contact", "#contact"],
+          ].map(([label, href]) => (
+            <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>
+          ))}
+        </nav>
       </header>
 
       <main id="home">
-        <section className="relative overflow-hidden bg-forest text-mist">
-          <div className="pointer-events-none absolute -right-64 -top-60 size-[690px] rounded-full border border-[#3e6753]" />
-          <div className="relative mx-auto grid max-w-[1160px] items-center gap-12 px-5 py-24 sm:px-8 lg:min-h-[620px] lg:grid-cols-[1.1fr_.9fr] lg:py-16">
-            <div>
-              <h1 className="font-display text-[clamp(2.65rem,6.4vw,5.8rem)] font-extrabold leading-[1.08] tracking-[-.075em]">
-                Web design and
-                <br />
-                <span className="text-[#dce8de]">development</span>
-              </h1>
-              <p className="mt-7 max-w-lg text-lg leading-8 text-[#e9f6ed]">
-                I build and maintain websites for businesses across the UK. I also develop
-                booking systems, dashboards and other custom web applications.
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <PillLink href="#contact" light>
-                  Discuss your project
-                </PillLink>
-                <PillLink href="#services" outline>
-                  View services
-                </PillLink>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              className="relative mx-auto h-[350px] w-full max-w-[470px] sm:h-[440px]"
-            >
-              <div className="absolute right-1 top-8 w-[96%] rotate-3 overflow-hidden rounded-[18px] border border-[#c5d8ca] bg-[#fafcf9] text-ink shadow-[0_25px_85px_#0008]">
-                <div className="flex gap-1.5 bg-[#e0efe3] p-4">
-                  {[1, 2, 3].map((n) => (
-                    <span
-                      key={n}
-                      className="size-2 rounded-full bg-[#92b6a0]"
-                    />
-                  ))}
-                </div>
-                <div className="p-7 sm:p-9">
-                  <div className="h-6 w-24 rounded-full bg-[#ddbe84]" />
-                  <div className="mt-6 h-5 w-4/5 rounded bg-[#00421f]" />
-                  <div className="mt-3 h-5 w-3/5 rounded bg-[#00421f]" />
-                  <div className="mt-5 h-2 w-full rounded bg-[#b7cdbe]" />
-                  <div className="mt-2 h-2 w-2/3 rounded bg-[#b7cdbe]" />
-                  <div className="mt-6 flex h-28 items-end justify-evenly rounded-xl bg-[#00421f] px-4 pt-5">
-                    {[45, 70, 55, 84, 66, 100].map((h, i) => (
-                      <span
-                        key={i}
-                        className="w-[12%] rounded-t bg-gold"
-                        style={{ height: `${h}%` }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <div className="reference-intro">
+          <section className="reference-hero reference-container">
+            <p className="reference-location"><span aria-hidden="true" /> Independent web developer · Suffolk, UK</p>
+            <h1>Web design and <span>development</span></h1>
+            <p className="reference-lede">
+              I build and maintain websites, booking systems and custom web applications
+              for businesses across the UK.
+            </p>
+            <a className="reference-button" href="#contact">
+              Discuss your project <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </section>
+
+          <section id="work" className="reference-container reference-showcase" aria-labelledby="reference-showcase-title">
+            <h2 id="reference-showcase-title">See how it could work</h2>
+            <p className="reference-section-lede">
+              Explore a café website, an online booking flow and an enquiries dashboard.
+            </p>
+            <ConceptExplorer />
+          </section>
+        </div>
         <section
           id="services"
-          className="mx-auto max-w-[1160px] px-5 py-24 sm:px-8"
+          className="mx-auto max-w-[1160px] px-5 py-16 sm:px-8 sm:py-24"
         >
           <Heading heading="Services" />
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="grid gap-x-10 md:grid-cols-2">
             {services.map((s) => (
               <article
                 key={s.title}
-                className={`flex flex-col rounded-[23px] border border-[#d7e3d9] p-8 transition-transform hover:-translate-y-1 ${s.featured ? "bg-[#e5f2e8]" : "bg-white"}`}
+                className="flex flex-col border-t border-forest/20 py-6"
               >
-                <h3 className="mb-4 max-w-sm font-display text-[29px] font-bold leading-tight">
+                <h3 className="mb-2 max-w-sm font-display text-[26px] font-bold leading-tight">
                   {s.title}
                 </h3>
                 <p className="max-w-md text-[15px] leading-7 text-[#3e5144]">
                   {s.body}
                 </p>
-                <div className="mt-auto flex items-center justify-between gap-3 pt-6">
+                <div className="mt-auto flex items-center justify-between gap-3 pt-3">
                   <small className="text-xs font-bold text-[#00652d]">
                     {s.note}
                   </small>
                   <a
                     href="#contact"
                     aria-label={`Enquire about ${s.title}`}
-                    className="grid size-11 place-items-center rounded-full bg-white/80 text-ink transition-transform hover:rotate-45"
+                    className="inline-flex min-h-11 items-center gap-2 font-bold text-celtic hover:underline"
                   >
-                    <ArrowUpRight size={20} />
+                    Enquire <ArrowUpRight aria-hidden="true" size={15} />
                   </a>
                 </div>
               </article>
             ))}
           </div>
         </section>
-        <section id="work" className="bg-[#eff5ef] py-24">
-          <div className="mx-auto max-w-[1160px] px-5 sm:px-8">
-            <Heading
-              heading="Design concepts"
-              description="Sample designs for a business website, a booking system and a dashboard."
-            />
-            <div
-              className="mb-8 flex flex-wrap gap-2"
-              role="group"
-              aria-label="Filter design concepts"
-            >
-              {(
-                [
-                  ["all", "All designs"],
-                  ["website", "Websites"],
-                  ["app", "Web applications"],
-                ] as const
-              ).map(([id, label]) => (
-                <button
-                  key={id}
-                  onClick={() => setFilter(id)}
-                  aria-pressed={filter === id}
-                  className={`rounded-full border px-5 py-2.5 text-sm font-bold ${filter === id ? "border-ink bg-ink text-white" : "border-[#ccdcd0] text-[#254c34]"}`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-            <div className="grid gap-5 md:grid-cols-3">
-              {shown.map((c) => (
-                <article
-                  key={c.id}
-                  className="overflow-hidden rounded-[20px] border border-[#d7e3d9] bg-white"
-                >
-                  <div
-                    aria-hidden="true"
-                    className={`flex h-[220px] items-center justify-center p-6 ${c.style}`}
-                  >
-                    <div
-                      className={`h-[155px] w-[88%] rounded-xl p-5 shadow-xl ${c.inner}`}
-                    >
-                      <p className="font-display text-2xl font-extrabold tracking-tight">
-                        {c.art}
-                      </p>
-                      <div className="mt-4 h-2 rounded-full bg-current opacity-10" />
-                      <div className="mt-2 h-2 w-1/2 rounded-full bg-current opacity-10" />
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="mb-2 font-display text-xl font-extrabold">
-                      {c.name}
-                    </h3>
-                    <p className="text-sm leading-6 text-muted">{c.body}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
         <section
           id="process"
-          className="mx-auto max-w-[1160px] px-5 py-24 sm:px-8"
+          className="mx-auto max-w-[1160px] px-5 py-16 sm:px-8 sm:py-24"
         >
           <Heading heading="How projects work" />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -416,7 +244,7 @@ export default function NiferoSite() {
             ))}
           </div>
         </section>
-        <section className="mx-auto max-w-[900px] px-5 py-24 sm:px-8">
+        <section className="mx-auto max-w-[900px] px-5 py-16 sm:px-8 sm:py-24">
           <h2 className="mb-8 font-display text-4xl font-extrabold sm:text-5xl">
             Frequently asked questions
           </h2>
@@ -424,7 +252,10 @@ export default function NiferoSite() {
             <details key={q} className="group border-b border-[#d7e3d9] py-6">
               <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-base font-extrabold marker:hidden">
                 {q}
-                <span aria-hidden="true" className="text-xl text-[#007a33] group-open:rotate-45">
+                <span
+                  aria-hidden="true"
+                  className="text-xl text-[#007a33] group-open:rotate-45"
+                >
                   +
                 </span>
               </summary>
@@ -432,22 +263,23 @@ export default function NiferoSite() {
             </details>
           ))}
         </section>
-        <section id="contact" className="bg-[#f2efe5] py-24">
+        <section id="contact" className="border-t border-forest/15 bg-[#f0f1e8] py-16 sm:py-24">
           <div className="mx-auto grid max-w-[1160px] gap-12 px-5 sm:px-8 lg:grid-cols-2">
             <div>
               <h2 className="font-display text-5xl font-extrabold leading-[1.1] sm:text-6xl">
                 Discuss your project
               </h2>
               <p className="mt-7 max-w-md text-lg leading-8 text-[#3e4841]">
-                Tell me what you need and what you’d like to achieve.
-                If you have an existing site or a target launch date, include those details.
+                Tell me what you need and what you’d like to achieve. If you
+                have an existing site or a target launch date, include those
+                details.
               </p>
             </div>
             <form
               onSubmit={handleSubmit}
               method="post"
               action="/api/enquiries"
-              className="rounded-[23px] bg-white p-6 shadow-sm sm:p-9"
+              className="min-w-0 rounded-2xl border border-forest/15 bg-white p-5 sm:p-8"
             >
               <fieldset className="grid gap-4" disabled={sending}>
                 <label className="text-sm font-bold" htmlFor="name">
@@ -459,7 +291,7 @@ export default function NiferoSite() {
                   required
                   maxLength={enquiryLimits.name}
                   autoComplete="name"
-                  className="rounded-xl border border-[#d7e3d9] px-4 py-3 focus:outline-[#007a33]"
+                  className="min-w-0 rounded-lg border border-[#c4cdc1] px-4 py-3 focus:outline-[#007a33]"
                 />
                 <label className="text-sm font-bold" htmlFor="email">
                   Email address
@@ -472,7 +304,7 @@ export default function NiferoSite() {
                   maxLength={enquiryLimits.email}
                   autoComplete="email"
                   placeholder="you@business.co.uk"
-                  className="rounded-xl border border-[#d7e3d9] px-4 py-3 focus:outline-[#007a33]"
+                  className="min-w-0 rounded-lg border border-[#c4cdc1] px-4 py-3 focus:outline-[#007a33]"
                 />
                 <label className="text-sm font-bold" htmlFor="service">
                   What can I help with?
@@ -482,10 +314,14 @@ export default function NiferoSite() {
                   name="service"
                   required
                   defaultValue=""
-                  className="rounded-xl border border-[#d7e3d9] bg-white px-4 py-3 focus:outline-[#007a33]"
+                  className="min-w-0 rounded-lg border border-[#c4cdc1] bg-white px-4 py-3 focus:outline-[#007a33]"
                 >
-                  <option value="" disabled>Select a service</option>
-                  {enquiryServices.map((service) => <option key={service}>{service}</option>)}
+                  <option value="" disabled>
+                    Select a service
+                  </option>
+                  {enquiryServices.map((service) => (
+                    <option key={service}>{service}</option>
+                  ))}
                 </select>
                 <label className="text-sm font-bold" htmlFor="message">
                   Project details
@@ -496,28 +332,40 @@ export default function NiferoSite() {
                   required
                   maxLength={enquiryLimits.message}
                   rows={4}
-                  className="rounded-xl border border-[#d7e3d9] px-4 py-3 focus:outline-[#007a33]"
+                  className="min-w-0 rounded-lg border border-[#c4cdc1] px-4 py-3 focus:outline-[#007a33]"
                 />
                 <div hidden>
                   <label htmlFor="website">Leave this field empty</label>
-                  <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+                  <input
+                    id="website"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
                 </div>
                 <button
                   type="submit"
                   className="mt-2 flex items-center justify-center gap-2 rounded-full bg-forest px-6 py-4 text-sm font-bold text-white disabled:opacity-60"
                 >
-                  {sending ? "Sending enquiry…" : "Send enquiry"} <ArrowRight size={16} />
+                  {sending ? "Sending enquiry…" : "Send enquiry"}{" "}
+                  <ArrowRight size={16} />
                 </button>
                 <p className="text-sm text-muted">
                   I’ll use your details to respond to your enquiry. Read the{" "}
-                  <Link href="/privacy" className="font-semibold text-celtic underline underline-offset-4">
+                  <Link
+                    href="/privacy"
+                    className="font-semibold text-celtic underline underline-offset-4"
+                  >
                     privacy notice
-                  </Link>.
+                  </Link>
+                  .
                 </p>
               </fieldset>
               <div role="status" aria-live="polite">
                 {formError && (
-                  <p className="mt-4 text-sm font-semibold text-red-800">{formError}</p>
+                  <p className="mt-4 text-sm font-semibold text-red-800">
+                    {formError}
+                  </p>
                 )}
               </div>
             </form>
