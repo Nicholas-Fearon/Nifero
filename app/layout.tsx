@@ -1,3 +1,4 @@
+import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import SiteFooter from "@/components/SiteFooter";
@@ -21,7 +22,7 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  metadataBase: new URL("https://nifero.co.uk"),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title,
     description,

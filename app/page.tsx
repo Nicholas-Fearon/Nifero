@@ -1,3 +1,4 @@
+import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import NiferoSite from "@/components/NiferoSite";
 
@@ -15,9 +16,9 @@ export default function Home() {
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://nifero.co.uk/#organization",
+    "@id": `${siteUrl}/#organization`,
     name: "Nifero",
-    url: "https://nifero.co.uk",
+    url: siteUrl,
     description: "Independent web development studio in Suffolk serving businesses across the UK.",
     founder: { "@type": "Person", name: "Nicholas Fearon" },
     areaServed: { "@type": "Country", name: "United Kingdom" },
