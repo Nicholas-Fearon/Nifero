@@ -10,21 +10,25 @@ import { enquiryLimits, enquiryServices } from "@/lib/enquiry-fields";
 const services = [
   {
     title: "Website design & development",
+    href: "/services/web-design-suffolk",
     body: "Give customers a clear, easy-to-use website where they can find your services and get in touch on any device.",
     note: "New websites & redesigns",
   },
   {
     title: "Website maintenance & support",
+    href: "/services/website-maintenance",
     body: "Keep your website running with planned updates, monitoring, backups and technical support.",
     note: "Monthly plans available",
   },
   {
     title: "Repairs, performance & optimisation",
+    href: "/services/website-repairs",
     body: "Fix broken features, speed up slow pages and make your existing website easier to use on mobile.",
     note: "One-off projects",
   },
   {
     title: "Custom web applications",
+    href: "/services/custom-web-applications",
     body: "Manage bookings, give customers a place to access information or bring business data together in a dashboard.",
     note: "Quoted to suit the project",
   },
@@ -199,7 +203,7 @@ export default function NiferoSite() {
           id="services"
           className="mx-auto max-w-[1160px] px-5 py-16 sm:px-8 sm:py-24"
         >
-          <Heading heading="Services" />
+          <Heading heading="Services" description="Work directly with Nicholas Fearon, an independent web developer based in Suffolk, from the first enquiry through to launch." />
           <div className="grid gap-x-10 md:grid-cols-2">
             {services.map((s) => (
               <article
@@ -207,7 +211,7 @@ export default function NiferoSite() {
                 className="flex flex-col border-t border-forest/20 py-6"
               >
                 <h3 className="mb-2 max-w-sm font-display text-[26px] font-bold leading-tight">
-                  {s.title}
+                  <Link href={s.href} className="hover:text-celtic hover:underline hover:underline-offset-4">{s.title}</Link>
                 </h3>
                 <p className="max-w-md text-[15px] leading-7 text-[#3e5144]">
                   {s.body}
@@ -217,11 +221,11 @@ export default function NiferoSite() {
                     {s.note}
                   </small>
                   <a
-                    href="#contact"
-                    aria-label={`Enquire about ${s.title}`}
+                    href={s.href}
+                    aria-label={`Learn more about ${s.title}`}
                     className="inline-flex min-h-11 items-center gap-2 font-bold text-celtic hover:underline"
                   >
-                    Enquire <ArrowUpRight aria-hidden="true" size={15} />
+                    Learn more <ArrowUpRight aria-hidden="true" size={15} />
                   </a>
                 </div>
               </article>

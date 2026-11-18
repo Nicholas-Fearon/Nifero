@@ -3,6 +3,7 @@ import Link from "next/link";
 import PolicyPage from "@/components/PolicyPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/cookies" },
   title: "Cookie policy | Nifero",
   description: "Cookie use on the Nifero website and private enquiry dashboard.",
 };

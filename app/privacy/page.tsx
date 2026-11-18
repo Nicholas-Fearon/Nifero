@@ -3,6 +3,7 @@ import Link from "next/link";
 import PolicyPage from "@/components/PolicyPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy notice | Nifero",
   description: "How Nifero handles personal information from website enquiries.",
 };

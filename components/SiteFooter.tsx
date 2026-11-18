@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { services } from "@/lib/services";
 
 export default function SiteFooter() {
   return (
     <footer className="bg-forest text-mist">
       <div className="mx-auto max-w-[1160px] px-5 py-10 sm:px-8">
-        <div className="grid gap-8 sm:grid-cols-[1.2fr_1fr_1fr]">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div>
             <Link
               href="/"
@@ -22,6 +23,16 @@ export default function SiteFooter() {
               <li><Link href="/#work" className="hover:underline">Design concepts</Link></li>
               <li><Link href="/#process" className="hover:underline">Process</Link></li>
               <li><Link href="/#contact" className="hover:underline">Contact</Link></li>
+            </ul>
+          </nav>
+          <nav aria-label="Service links">
+            <h2 className="mb-3 text-base font-bold">Services</h2>
+            <ul className="text-sm">
+              {services.map(({ slug, shortTitle }) => (
+                <li key={slug}>
+                  <Link href={`/services/${slug}`} className="inline-flex min-h-11 items-center py-2 hover:underline hover:underline-offset-4">{shortTitle}</Link>
+                </li>
+              ))}
             </ul>
           </nav>
           <nav aria-label="Privacy and data links">

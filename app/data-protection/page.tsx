@@ -3,6 +3,7 @@ import Link from "next/link";
 import PolicyPage from "@/components/PolicyPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/data-protection" },
   title: "Data protection | Nifero",
   description: "How to exercise your data protection rights or raise a concern with Nifero.",
 };
