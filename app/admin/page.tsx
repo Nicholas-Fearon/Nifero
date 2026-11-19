@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import DeleteEnquiry from "@/components/DeleteEnquiry";
 import { signIn, signOut } from "./actions";
 import { getAdminSession } from "./auth";
 
@@ -18,6 +19,9 @@ const dateFormat = new Intl.DateTimeFormat("en-GB", {
 });
 
 const messages: Record<string, string> = {
+  "enquiry-deleted": "Enquiry deleted.",
+  "delete-failed": "The enquiry couldn’t be deleted. Please try again.",
+  "delete-unavailable": "This enquiry is no longer available, or you don’t have permission to delete it.",
   "sign-in-failed": "Couldn’t sign in. Check your email and password and try again.",
   "sign-out-failed": "Couldn’t sign out. Please try again.",
 };
@@ -56,7 +60,7 @@ export default async function AdminPage({
           </Link>
           {user && (
             <form action={signOut}>
-              <button className="rounded-full border border-white/30 px-4 py-2 text-sm font-bold">
+              <button className="rounded-full border border-white/30 min-h-11 px-4 py-2 text-sm font-bold">
                 Sign out
               </button>
             </form>
@@ -92,16 +96,17 @@ export default async function AdminPage({
           {entries.slice(0, pageSize).map((enquiry) => (
             <details key={enquiry.id} className="rounded-2xl border border-[#d7e3d9] bg-white">
               <summary className="cursor-pointer rounded-2xl p-5 focus-visible:outline-[#007a33]">
-                <span className="ml-2 font-bold break-words">{enquiry.name}</span>
+                <span className="ml-2 font-bold [overflow-wrap:anywhere]">{enquiry.name}</span>
                 <span className="mt-1 block pl-6 text-sm text-muted">
                   {enquiry.service} · <time dateTime={enquiry.created_at}>{dateFormat.format(new Date(enquiry.created_at))}</time>
                 </span>
               </summary>
-              <div className="grid gap-4 border-t border-[#d7e3d9] p-5">
+              <div className="grid min-w-0 gap-4 border-t border-[#d7e3d9] p-5">
                 <a href={`mailto:${encodeURIComponent(enquiry.email)}`} className="w-fit break-all font-bold underline">
                   {enquiry.email}
                 </a>
-                <p className="whitespace-pre-wrap break-words">{enquiry.message}</p>
+                <p className="whitespace-pre-wrap [overflow-wrap:anywhere]">{enquiry.message}</p>
+                <DeleteEnquiry id={enquiry.id} name={enquiry.name} returnPage={entries.length === 1 && page > 1 ? page - 1 : page} />
               </div>
             </details>
           ))}
