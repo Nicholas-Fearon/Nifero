@@ -18,11 +18,11 @@ export default function SiteFooter() {
           </div>
           <nav aria-label="Website links">
             <h2 className="mb-3 text-base font-bold">Website</h2>
-            <ul className="flex flex-wrap gap-x-5 gap-y-3 text-sm">
-              <li><Link href="/#services" className="hover:underline">Services</Link></li>
-              <li><Link href="/#work" className="hover:underline">Design concepts</Link></li>
-              <li><Link href="/#process" className="hover:underline">Process</Link></li>
-              <li><Link href="/#contact" className="hover:underline">Contact</Link></li>
+            <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+              <li><Link href="/#services" className="inline-flex min-h-11 items-center py-2 hover:underline hover:underline-offset-4">Services</Link></li>
+              <li><Link href="/#work" className="inline-flex min-h-11 items-center py-2 hover:underline hover:underline-offset-4">Design concepts</Link></li>
+              <li><Link href="/#process" className="inline-flex min-h-11 items-center py-2 hover:underline hover:underline-offset-4">Process</Link></li>
+              <li><Link href="/#contact" className="inline-flex min-h-11 items-center py-2 hover:underline hover:underline-offset-4">Contact</Link></li>
             </ul>
           </nav>
           <nav aria-label="Service links">
@@ -37,10 +37,10 @@ export default function SiteFooter() {
           </nav>
           <nav aria-label="Privacy and data links">
             <h2 className="mb-3 text-base font-bold">Privacy and data</h2>
-            <ul className="flex flex-wrap gap-x-5 gap-y-3 text-sm">
-              <li><Link href="/privacy" className="hover:underline">Privacy notice</Link></li>
-              <li><Link href="/data-protection" className="hover:underline">Data protection</Link></li>
-              <li><Link href="/cookies" className="hover:underline">Cookie policy</Link></li>
+            <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+              <li><Link href="/privacy" className="inline-flex min-h-11 items-center py-2 hover:underline hover:underline-offset-4">Privacy notice</Link></li>
+              <li><Link href="/data-protection" className="inline-flex min-h-11 items-center py-2 hover:underline hover:underline-offset-4">Data protection</Link></li>
+              <li><Link href="/cookies" className="inline-flex min-h-11 items-center py-2 hover:underline hover:underline-offset-4">Cookie policy</Link></li>
             </ul>
           </nav>
         </div>
